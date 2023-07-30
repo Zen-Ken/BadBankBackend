@@ -101,11 +101,13 @@ async function updateUser(email, name, newEmail, newName){
                 throw "Can't change email, email already exists";
             }
         }
-        result = await collection.updateOne(
+        await collection.updateOne(
             {email: email},
             {$set: {email: newEmail, name: newName}},
-            { returnNewDocument : true }
-        );
+            { returnNewDocument : true, returnDocument: 'after' }
+        )
+        console.log("User Updated");
+        result = await find(newEmail).then((user=>{ return user}))
         return result.value;
     } 
     catch (err){
