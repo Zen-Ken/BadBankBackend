@@ -90,4 +90,27 @@ async function findAll(){
     }
 }
 
-module.exports = {create, find, findOne, update, findAll};
+async function updateUser(email, name, newEmail, newName){
+    try {
+        const collection  = db.collection("users")
+        // HOW TO UPDATE MongoDB document
+        if(newEmail != email)
+        {
+            console.log("Emails different");
+            if(await find(newEmail).then((user=>{ return user.length})) > 0){
+                throw "Can't change email, email already exists";
+            }
+        }
+        result = await collection.updateOne(
+            {email: email},
+            {$set: {email: newEmail, name: newName}},
+            { returnNewDocument : true }
+        );
+        return result.value;
+    } 
+    catch (err){
+        console.log("update() Failed");
+        console.log(err);
+    }
+}
+module.exports = {create, find, findOne, update, findAll, updateUser};

@@ -4,7 +4,7 @@ var cors    = require('cors');
 require("dotenv").config();
 //var dal     = require('./dal.js');
 const e = require('express');
-const { create, find, findOne,findAll, update } = require('./dal');
+const { create, find, findOne,findAll, update, updateUser } = require('./dal');
 // used to serve static files from public directory
 app.use(express.static('public/'));
 app.use(cors());
@@ -93,7 +93,27 @@ app.get('/account/all', function (req, res) {
             res.send(docs);
     });
 });
+app.get('/account/updateUser/:email/:newEmail/:newName', function (req, res) {
+    // check if account exists
+    find(req.params.email).
+        then((users) => {
+            // if user exists, return error message
+            console.log(users)
+            if(users.length <= 0){
+                console.log('User doesnt in exists');
+                res.send('User doesnt in exists');
+            }
+            else {
+                // else create user
+                updateUser(req.params.email,req.params.name,req.params.newEmail,req.params.newName).
+                    then((user) => {
+                        console.log(user);
+                        res.send(user);
+                    });
+            }
 
+        });
+});
 var port = 3000;
 app.listen(port);
 console.log('Running on http://localhost:' + port);
