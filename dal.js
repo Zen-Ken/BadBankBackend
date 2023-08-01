@@ -3,7 +3,8 @@ const { json } = require('express');
 
 
 const MongoClient = require('mongodb').MongoClient;
-const url         = process.env.CONNECTION_STRING;
+const url         = "mongodb+srv://kluong159:cQMREgiyGEuTYDdh@myfirstmongodb.xnhhsv5.mongodb.net/";
+// const url         = process.env.CONNECTION_STRING;
 
 const mongoClient = new MongoClient(url);
 const db          = mongoClient.db('badBank');
@@ -108,7 +109,7 @@ async function updateUser(email, name, newEmail, newName){
         )
         console.log("User Updated");
         result = await find(newEmail).then((user=>{ return user}))
-        return result.value;
+        return result;
     } 
     catch (err){
         console.log("update() Failed");
