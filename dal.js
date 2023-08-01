@@ -3,8 +3,7 @@ const { json } = require('express');
 
 
 const MongoClient = require('mongodb').MongoClient;
-const url         = "mongodb+srv://kluong159:cQMREgiyGEuTYDdh@myfirstmongodb.xnhhsv5.mongodb.net/";
-// const url         = process.env.CONNECTION_STRING;
+const url         = process.env.CONNECTION_STRING;
 
 const mongoClient = new MongoClient(url);
 const db          = mongoClient.db('badBank');
