@@ -115,4 +115,17 @@ async function updateUser(email, name, newEmail, newName){
         console.log(err);
     }
 }
-module.exports = {create, find, findOne, update, findAll, updateUser};
+async function resetPassword(email, newPassword){
+    try {
+        const collection  = db.collection("users")
+        await collection.updateOne(
+            {email: email},
+            {$set: {password: newPassword}},
+            { returnNewDocument : true, returnDocument: 'after' }
+        )
+    }
+    catch (err){
+        console.log(err)
+    }
+}
+module.exports = {create, find, findOne, update, findAll, updateUser, resetPassword};
