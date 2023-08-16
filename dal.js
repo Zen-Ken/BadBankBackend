@@ -123,6 +123,7 @@ async function resetPassword(email, newPassword){
             {$set: {password: newPassword}},
             { returnNewDocument : true, returnDocument: 'after' }
         )
+        return email;
     }
     catch (err){
         console.log(err)
